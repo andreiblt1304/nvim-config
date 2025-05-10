@@ -7,10 +7,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- disable default spacebar action so it only works as <leader>
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+
 require("lazy").setup("plugins")
 
 require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "rust_analyzer" },
-  automatic_installation = true,
-})
+
+-- require("lsp")
