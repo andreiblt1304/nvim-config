@@ -5,12 +5,12 @@ if not vim.loop.fs_stat(lazypath) then
     "https://github.com/folke/lazy.nvim.git", lazypath
   })
 end
-vim.opt.rtp:prepend(lazypath)   -- add to runtimepath early_
+vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")      -- finds lua/plugins.lua
+require("lazy").setup("plugins")
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "rust_analyzer" },  -- auto-installs servers
+  ensure_installed = { "lua_ls", "rust_analyzer" },
   automatic_installation = true,
 })
