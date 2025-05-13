@@ -10,9 +10,6 @@ local function map(mode, lhs, rhs, desc, bufnr)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-----------------------------------------------------------------------------------------------------
--- LSP-specific mappings ---------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
 function M.lsp(bufnr)
   -- Go-to & navigation -------------------------------------------------------
   map("n", "gd", vim.lsp.buf.definition,        "LSP: Go to definition",        bufnr)
@@ -20,14 +17,16 @@ function M.lsp(bufnr)
   map("n", "gI", vim.lsp.buf.implementation,    "LSP: Go to implementation",    bufnr)
   map("n", "gr", vim.lsp.buf.references,        "LSP: List references",         bufnr)
   map("n", "<leader>D", vim.lsp.buf.type_definition, "LSP: Go to type definition", bufnr)
+  vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<CR>", { desc = "Open Lazygit" })
 
   -- Symbols -----------------------------------------------------------------
   map("n", "<leader>ds", vim.lsp.buf.document_symbol,  "LSP: Document symbols",  bufnr)
   map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, "LSP: Workspace symbols", bufnr)
 
   -- Refactor / actions -------------------------------------------------------
-  map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "LSP: Code action",  bufnr)
-  map("n", "<leader>rn", vim.lsp.buf.rename,              "LSP: Rename",       bufnr)
+  map("n", "<leader>ca", vim.lsp.buf.code_action,        "LSP: Code action",       bufnr)
+  map("v", "<leader>ca", vim.lsp.buf.range_code_action,  "LSP: Range code action", bufnr)
+  map({ "n", "v" }, "<leader>rn", vim.lsp.buf.rename,    "LSP: Rename",            bufnr)
 
   -- Inlay hints toggle (Neovim 0.10+) ---------------------------------------
   map("n", "<leader>th", function()
