@@ -14,7 +14,5 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
 require("lazy").setup("plugins")
-
 require("mason").setup()
-
--- require("lsp")
+require("lsp")
