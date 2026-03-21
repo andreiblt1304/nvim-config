@@ -20,6 +20,38 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
+    local map = function(lhs, rhs, desc)
+      vim.keymap.set("n", lhs, rhs, {
+        buffer = args.buf,
+        silent = true,
+        desc = desc,
+      })
+    end
+
+    if client:supports_method("textDocument/hover") then
+      map("K", vim.lsp.buf.hover, "LSP hover")
+    end
+
+    if client:supports_method("textDocument/definition") then
+      map("gd", vim.lsp.buf.definition, "Go to definition")
+    end
+
+    if client:supports_method("textDocument/declaration") then
+      map("gD", vim.lsp.buf.declaration, "Go to declaration")
+    end
+
+    if client:supports_method("textDocument/references") then
+      map("gr", vim.lsp.buf.references, "Find references")
+    end
+
+    if client:supports_method("textDocument/implementation") then
+      map("gi", vim.lsp.buf.implementation, "Go to implementation")
+    end
+
+    if client:supports_method("textDocument/typeDefinition") then
+      map("gt", vim.lsp.buf.type_definition, "Go to type definition")
+    end
+
     if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
     end
