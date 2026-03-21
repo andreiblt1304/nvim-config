@@ -23,8 +23,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
-    local map = function(lhs, rhs, desc)
-      vim.keymap.set("n", lhs, rhs, {
+    local map = function(mode, lhs, rhs, desc)
+      vim.keymap.set(mode, lhs, rhs, {
         buffer = args.buf,
         silent = true,
         desc = desc,
@@ -32,27 +32,35 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     if client:supports_method("textDocument/hover") then
-      map("K", vim.lsp.buf.hover, "LSP hover")
+      map("n", "K", vim.lsp.buf.hover, "LSP hover")
     end
 
     if client:supports_method("textDocument/definition") then
-      map("gd", vim.lsp.buf.definition, "Go to definition")
+      map("n", "gd", vim.lsp.buf.definition, "Go to definition")
     end
 
     if client:supports_method("textDocument/declaration") then
-      map("gD", vim.lsp.buf.declaration, "Go to declaration")
+      map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
     end
 
     if client:supports_method("textDocument/references") then
-      map("gr", vim.lsp.buf.references, "Find references")
+      map("n", "gr", vim.lsp.buf.references, "Find references")
     end
 
     if client:supports_method("textDocument/implementation") then
-      map("gi", vim.lsp.buf.implementation, "Go to implementation")
+      map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
     end
 
     if client:supports_method("textDocument/typeDefinition") then
-      map("gt", vim.lsp.buf.type_definition, "Go to type definition")
+      map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
+    end
+
+    if client:supports_method("textDocument/codeAction") then
+      map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "Code actions")
+    end
+
+    if client:supports_method("textDocument/rename") then
+      map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
     end
 
     if client:supports_method("textDocument/inlayHint") then
