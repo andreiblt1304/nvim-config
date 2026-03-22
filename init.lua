@@ -22,9 +22,15 @@ vim.keymap.set("i", "<CR>", function()
     return "<C-y>"
   end
 
+  local ok, npairs = pcall(require, "nvim-autopairs")
+  if ok then
+    return npairs.autopairs_cr()
+  end
+
   return "<CR>"
 end, {
   expr = true,
+  replace_keycodes = false,
   silent = true,
   desc = "Confirm completion or insert newline",
 })
