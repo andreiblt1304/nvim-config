@@ -3,6 +3,13 @@ vim.g.loaded_netrwPlugin = 1
 
 require("config.lazy")
 
+vim.lsp.config("buf_ls", {
+  cmd = { "buf", "lsp", "serve" },
+  filetypes = { "proto" },
+  root_markers = { "buf.yaml", ".git" },
+})
+vim.lsp.enable("buf_ls")
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
