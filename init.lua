@@ -13,16 +13,52 @@ vim.lsp.enable("buf_ls")
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
-vim.opt.completeopt = { "menuone", "noinsert", "popup" }
+vim.opt.completeopt = { "menuone", "noinsert", "noselect", "popup" }
 vim.opt.updatetime = 250
-vim.cmd.colorscheme("habamax")
+vim.opt.autoread = true
+
+local file_watch_group = vim.api.nvim_create_augroup("file-watch", { clear = true })
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "TermClose", "TermLeave" }, {
+  group = file_watch_group,
+  callback = function()
+    if vim.fn.mode() ~= "c" then
+      vim.cmd.checktime()
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  group = file_watch_group,
+  callback = function()
+    vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.INFO, { title = "nvim" })
+  end,
+})
+
+local preferred_colorscheme = "astrodark"
+if not pcall(vim.cmd.colorscheme, preferred_colorscheme) then
+  vim.cmd.colorscheme("habamax")
+end
 
 vim.keymap.set("i", "<CR>", function()
+  local ok, npairs = pcall(require, "nvim-autopairs")
+
   if vim.fn.pumvisible() == 1 then
-    return "<C-y>"
+    if vim.fn.complete_info({ "selected" }).selected ~= -1 then
+      if ok then
+        return npairs.esc("<C-y>")
+      end
+
+      return "<C-y>"
+    end
+
+    if ok then
+      return npairs.esc("<C-e>") .. npairs.autopairs_cr()
+    end
+
+    return "<C-e><CR>"
   end
 
-  local ok, npairs = pcall(require, "nvim-autopairs")
   if ok then
     return npairs.autopairs_cr()
   end
@@ -30,7 +66,6 @@ vim.keymap.set("i", "<CR>", function()
   return "<CR>"
 end, {
   expr = true,
-  replace_keycodes = false,
   silent = true,
   desc = "Confirm completion or insert newline",
 })
@@ -149,12 +184,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 require('lualine').setup()
-
-local function toggle_theme()
-  current = current % #themes + 1
-  local theme = themes[current]
-  vim.cmd.colorscheme(theme)
-  print("Switched to theme: " .. theme)
-end
-
-vim.api.nvim_create_user_command("Theme", toggle_theme, {})
