@@ -16,6 +16,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noinsert", "noselect", "popup" }
 vim.opt.updatetime = 250
 vim.opt.autoread = true
+vim.opt.cmdheight = 0
 
 local file_watch_group = vim.api.nvim_create_augroup("file-watch", { clear = true })
 
@@ -175,7 +176,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
-
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.rs",
   callback = function()
