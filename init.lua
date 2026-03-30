@@ -41,7 +41,7 @@ if not pcall(vim.cmd.colorscheme, preferred_colorscheme) then
   vim.cmd.colorscheme("habamax")
 end
 
-vim.keymap.set("i", "<CR>", function()
+function _G.SmartInsertCR()
   local ok, npairs = pcall(require, "nvim-autopairs")
 
   if vim.fn.pumvisible() == 1 then
@@ -65,10 +65,12 @@ vim.keymap.set("i", "<CR>", function()
   end
 
   return "<CR>"
-end, {
+end
+
+vim.api.nvim_set_keymap("i", "<CR>", "v:lua.SmartInsertCR()", {
   expr = true,
+  noremap = true,
   silent = true,
-  desc = "Confirm completion or insert newline",
 })
 
 local themes = { "shine", "habamax" }
