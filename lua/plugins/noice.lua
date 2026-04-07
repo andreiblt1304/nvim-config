@@ -1,5 +1,4 @@
-return 
-{
+return {
   "folke/noice.nvim",
   event = "VeryLazy",
   opts = {
@@ -7,8 +6,12 @@ return
       {
         filter = {
           event = "msg_show",
-          kind = "",
-          find = "written",
+          any = {
+            { kind = "", find = "written" },
+            { kind = "", find = "fewer lines?" },
+            { kind = "", find = "more lines?" },
+            { kind = "", find = "lines? yanked" },
+          },
         },
         opts = { skip = true },
       },
@@ -21,5 +24,5 @@ return
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
     "rcarriga/nvim-notify",
-    }
+  },
 }
