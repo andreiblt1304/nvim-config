@@ -73,6 +73,13 @@ vim.api.nvim_set_keymap("i", "<CR>", "v:lua.SmartInsertCR()", {
   silent = true,
 })
 
+for _, mode in ipairs({ "i", "c" }) do
+  vim.keymap.set(mode, "<M-BS>", "<C-w>", { desc = "Delete previous word" })
+  vim.keymap.set(mode, "<M-Del>", "<C-w>", { desc = "Delete previous word" })
+  vim.keymap.set(mode, "<D-BS>", "<C-u>", { desc = "Delete to start of line" })
+  vim.keymap.set(mode, "<D-Del>", "<C-u>", { desc = "Delete to start of line" })
+end
+
 local themes = { "shine", "habamax" }
 local current = vim.fn.index(themes, vim.g.colors_name) + 1
 if current == 0 then
