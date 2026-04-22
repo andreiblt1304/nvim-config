@@ -13,7 +13,9 @@ vim.lsp.enable("buf_ls")
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
-vim.opt.completeopt = { "menuone", "noinsert", "noselect", "popup" }
+vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
+vim.opt.pumheight = 10
+vim.opt.pummaxwidth = 40
 vim.opt.updatetime = 250
 vim.opt.autoread = true
 vim.opt.cmdheight = 0
