@@ -14,7 +14,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
-vim.opt.pumheight = 10
+vim.opt.pumheight = 6
 vim.opt.pummaxwidth = 40
 vim.opt.updatetime = 250
 vim.opt.autoread = true
@@ -129,17 +129,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     if client:supports_method("textDocument/completion") then
-      if client.name == "rust-analyzer" then
-        local chars = {}
-        for i = 32, 126 do
-          table.insert(chars, string.char(i))
-        end
-
-        client.server_capabilities.completionProvider =
-          client.server_capabilities.completionProvider or {}
-        client.server_capabilities.completionProvider.triggerCharacters = chars
-      end
-
       vim.lsp.completion.enable(true, client.id, args.buf, {
         autotrigger = true,
       })
