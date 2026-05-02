@@ -14,7 +14,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
-vim.opt.pumheight = 6
 vim.opt.pummaxwidth = 40
 vim.opt.updatetime = 250
 vim.opt.autoread = true
@@ -128,7 +127,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
     end
 
-    if client:supports_method("textDocument/completion") then
+    if client:supports_method("textDocument/completion") and not vim.g.use_cmp_completion then
       vim.lsp.completion.enable(true, client.id, args.buf, {
         autotrigger = true,
       })
