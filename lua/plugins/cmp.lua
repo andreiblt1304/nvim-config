@@ -49,6 +49,11 @@ return {
             max_height = 8,
           },
         },
+        view = {
+          docs = {
+            auto_open = false,
+          },
+        },
         mapping = cmp.mapping.preset.insert({
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
