@@ -181,5 +181,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.lsp.buf.format({ async = false })
   end,
 })
-
-require('lualine').setup()
