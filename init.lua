@@ -10,6 +10,14 @@ vim.lsp.config("buf_ls", {
 })
 vim.lsp.enable("buf_ls")
 
+vim.lsp.config("tombi", {
+  cmd = { "tombi", "lsp" },
+  filetypes = { "toml" },
+  root_markers = { "tombi.toml", "pyproject.toml", "Cargo.toml", ".git" },
+})
+
+vim.lsp.enable("tombi")
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
