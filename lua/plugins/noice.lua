@@ -11,6 +11,11 @@ return {
     },
     routes = {
       {
+        view = "mini",
+        filter = { warning = true },
+        opts = { title = "Warning" },
+      },
+      {
         filter = {
           event = "msg_show",
           any = {
