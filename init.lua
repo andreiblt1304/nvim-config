@@ -50,34 +50,8 @@ if not pcall(vim.cmd.colorscheme, preferred_colorscheme) then
   vim.cmd.colorscheme("habamax")
 end
 
-function _G.SmartInsertCR()
-  local ok, npairs = pcall(require, "nvim-autopairs")
-
-  if vim.fn.pumvisible() == 1 then
-    if vim.fn.complete_info({ "selected" }).selected ~= -1 then
-      if ok then
-        return npairs.esc("<C-y>")
-      end
-
-      return "<C-y>"
-    end
-
-    if ok then
-      return npairs.esc("<C-e>") .. npairs.autopairs_cr()
-    end
-
-    return "<C-e><CR>"
-  end
-
-  if ok then
-    return npairs.autopairs_cr()
-  end
-
-  return "<CR>"
-end
-
-vim.api.nvim_set_keymap("i", "<CR>", "v:lua.SmartInsertCR()", {
-  expr = true,
+vim.api.nvim_set_keymap("i", "<CR>", "<CR>", {
+  expr = false,
   noremap = true,
   silent = true,
 })
