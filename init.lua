@@ -15,8 +15,28 @@ vim.lsp.config("tombi", {
   filetypes = { "toml" },
   root_markers = { "tombi.toml", "pyproject.toml", "Cargo.toml", ".git" },
 })
-
 vim.lsp.enable("tombi")
+
+vim.lsp.config("codebook", {
+    cmd = { "codebook-lsp", "serve" },
+    filetypes = {
+        "rust",
+        "lua",
+        "markdown",
+        "toml",
+        "text",
+    },
+    root_markers = {
+        ".git",
+        "codebook.toml",
+        ".codebook.toml",
+    },
+    init_options = {
+        checkWhileTyping = true,
+        diagnosticSeverity = "warning",
+    },
+})
+vim.lsp.enable("codebook")
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -55,6 +75,7 @@ vim.api.nvim_set_keymap("i", "<CR>", "<CR>", {
   noremap = true,
   silent = true,
 })
+
 
 for _, mode in ipairs({ "i", "c" }) do
   vim.keymap.set(mode, "<M-BS>", "<C-w>", { desc = "Delete previous word" })
