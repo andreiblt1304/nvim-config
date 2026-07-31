@@ -32,11 +32,22 @@ vim.lsp.config("codebook", {
         ".codebook.toml",
     },
     init_options = {
-        checkWhileTyping = true,
-        diagnosticSeverity = "warning",
+        checkWhileTyping = false,
+        diagnosticSeverity = "hint",
+        logLevel = "warn",
     },
+    on_attach = function(client)
+        local namespace = vim.lsp.diagnostic.get_namespace(client.id)
+
+        vim.diagnostic.config({
+            signs = false,        -- no H/W letters in the gutter
+            virtual_text = false, -- no diagnostic text after the code
+            underline = true,     -- retain subtle underlining
+        }, namespace)
+    end,
 })
 vim.lsp.enable("codebook")
+vim.lsp.log.set_level("WARN")
 
 vim.opt.number = true
 vim.opt.relativenumber = true
